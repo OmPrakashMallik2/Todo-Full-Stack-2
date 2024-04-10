@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from './Security/AuthContext';
 
 function Login() {
-    const [username, setUsername] = useState('user');
-    const [password, setPassword] = useState('54321');
-    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-    const [showErrorMessage, setShowErrorMessage] = useState(false);
+    const [username, setUsername] = useState('opmallik')
+    const [password, setPassword] = useState('54321')
+    const [showErrorMessage, setShowErrorMessage] = useState(false)
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
+
+    const authContext = useAuth()
 
     const handleUsernameChange = (event) => {
         setUsername(event.target.value);
@@ -18,12 +20,9 @@ function Login() {
     }
 
     const handleSubmit = () => {
-        if (username === 'opmallik' && password === '54321') {
-            setShowSuccessMessage(true);
-            setShowErrorMessage(false);
+        if (authContext.login(username, password)) {
             navigate(`/welcome/${username}`);
         } else {
-            setShowSuccessMessage(false);
             setShowErrorMessage(true);
         }
     }
@@ -31,11 +30,8 @@ function Login() {
     return (
         <div className='p-5'>
             <div className='p-3'>
-                {showSuccessMessage && (
-                    <h1 className='text-xl font-semibold text-green-500'>Authenticated Successfully!</h1>
-                )}
                 {showErrorMessage && (
-                    <h1 className='text-xl font-semibold text-red-500'>Authentication failed, Try again!</h1>
+                    <h1 className='text-xl font-semibold text-white bg-red-500 rounded py-2'>Authentication failed, Try again!</h1>
                 )}
             </div>
 

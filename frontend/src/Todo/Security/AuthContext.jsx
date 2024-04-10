@@ -1,18 +1,32 @@
-import React, { createContext } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 // 1: create context
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
+export const useAuth = () => useContext(AuthContext)
+
+// 2: define initial context value
 export default function AuthProvider({ children }) {
-    // 2: define initial context value
-    // const initialAuthState = {
-    //     isAuthenticated: false,
-    //     user: null,
-    // };
+
+    const [isAuthenticated, setAuthenticated] = useState(false);
+
+    const login = (username, password) => {
+        if (username === 'opmallik' && password === '54321') {
+            setAuthenticated(true)
+            return true
+        } else {
+            setAuthenticated(false)
+            return false
+        }
+    }
+
+    const logout = () => {
+        setAuthenticated(false);
+    }
 
     return (
         // 3: provide context value
-        <AuthContext.Provider >
+        <AuthContext.Provider value={{ isAuthenticated, login, logout }} >
             {children}
         </AuthContext.Provider>
     )
