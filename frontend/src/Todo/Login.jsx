@@ -1,28 +1,30 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
-
     const [username, setUsername] = useState('user');
     const [password, setPassword] = useState('54321');
-
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const [showErrorMessage, setShowErrorMessage] = useState(false);
 
-    const handleUsernameChange = (Event) => {
-        setUsername(Event.target.value)
+    const navigate = useNavigate();
+
+    const handleUsernameChange = (event) => {
+        setUsername(event.target.value);
     }
 
-    const handlePasswordChange = (Event) => {
-        setPassword(Event.target.value)
+    const handlePasswordChange = (event) => {
+        setPassword(event.target.value);
     }
 
     const handleSubmit = () => {
-        if (username === 'user' && password === '54321') {
-            setShowSuccessMessage(true)
-            setShowErrorMessage(false)
+        if (username === 'opmallik' && password === '54321') {
+            setShowSuccessMessage(true);
+            setShowErrorMessage(false);
+            navigate(`/welcome/${username}`);
         } else {
-            setShowSuccessMessage(false)
-            setShowErrorMessage(true)
+            setShowSuccessMessage(false);
+            setShowErrorMessage(true);
         }
     }
 
@@ -68,4 +70,4 @@ function Login() {
     )
 }
 
-export default Login
+export default Login;
